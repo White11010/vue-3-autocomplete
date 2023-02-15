@@ -95,10 +95,14 @@ const onInputBlur = (e: FocusEvent) => {
   emit('blur')
 }
 
-const onInput = ({ target }: Event) => emit('input:search', (target as HTMLInputElement).value)
+const onInput = ({ target }: Event) => {
+  emit('input:search', (target as HTMLInputElement).value)
+  emit('update:modelValue', null)
+}
 
 const onItemClick = (item: any) => {
   showList.value = false
+  emit('input:search', getProperty(item))
   emit('update:modelValue', item)
 }
 </script>
@@ -130,6 +134,7 @@ $input-border-radius: var(--input-border-radius, 0);
 
 .autocomplete {
   position: relative;
+  width: fit-content;
 
   &__input{
     padding: $input-padding;
